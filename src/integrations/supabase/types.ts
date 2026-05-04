@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      guests: {
+        Row: {
+          created_at: string
+          display_name: string
+          greeting: string | null
+          id: string
+          note: string | null
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_name: string
+          greeting?: string | null
+          id?: string
+          note?: string | null
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          greeting?: string | null
+          id?: string
+          note?: string | null
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       rsvps: {
         Row: {
           attending: boolean
