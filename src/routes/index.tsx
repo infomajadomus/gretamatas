@@ -9,11 +9,12 @@ import { Countdown } from "@/components/wedding/Countdown";
 import { Schedule } from "@/components/wedding/Schedule";
 import { RsvpForm } from "@/components/wedding/RsvpForm";
 import { useReveal } from "@/hooks/useReveal";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Matas & Greta — 2026.09.06" },
+      { title: "Matas & Greta — 2026.09.06 · Vilnius" },
       {
         name: "description",
         content:
@@ -31,16 +32,20 @@ export const Route = createFileRoute("/")({
 
 const faqItems = [
   {
+    q: "Kada turėčiau atvykti?",
+    a: "Maloniai prašome atvykti į bažnyčią 15–20 minučių anksčiau, kad galėtume drauge ramiai pasitikti ceremonijos pradžią 15:00.",
+  },
+  {
     q: "Ar galima atvykti su vaikais?",
-    a: "Mums labai svarbu, kad ši diena būtų ypatinga visiems. Maloniai prašome vaikus palikti namuose, kad galėtumėte mėgautis vakaru.",
+    a: "Į ceremoniją bažnyčioje vaikai laukiami. Tačiau vakarinė dalis restorane „Elven“ — tik suaugusiems. Norime, kad ir Jūs, ir tėveliai galėtų pailsėti ir mėgautis vakaru.",
+  },
+  {
+    q: "Kokia aprangos forma?",
+    a: "Damos — ilgos suknelės. Ponai — kostiumai. Spalvos — gamtos atspalviai (samanų, šalavijo, kreminės, smėlio). Prašome vengti baltos.",
   },
   {
     q: "Ar bus parkavimo vieta?",
-    a: "Taip, prie pokylio salės bus pakankamai vietų. Prie bažnyčios — miesto parkavimas.",
-  },
-  {
-    q: "Kada baigsis vakaras?",
-    a: "Šventė tęsis iki ankstyvo ryto — kviečiame likti su mumis iki paskutinio šokio.",
+    a: "Prie restorano „Elven“ rasite parkavimo vietų. Prie bažnyčios — miesto parkavimas, todėl atvykite anksčiau.",
   },
   {
     q: "Iki kada laukiame Jūsų atsakymo?",
@@ -48,30 +53,56 @@ const faqItems = [
   },
 ];
 
+const dressColors = [
+  { c: "#2d3a2a", n: "Tamsios samanos" },
+  { c: "#4a6741", n: "Miškas" },
+  { c: "#87a878", n: "Šalavijas" },
+  { c: "#c4b89a", n: "Smėlis" },
+  { c: "#e8e0d0", n: "Kreminė" },
+  { c: "#c9a878", n: "Šampanas" },
+];
+
 function Index() {
   const [introDone, setIntroDone] = useState(false);
   const [musicOn, setMusicOn] = useState(false);
+  const [greeting, setGreeting] = useState("Mielas Svety,");
+  const [slug, setSlug] = useState<string | undefined>(undefined);
   useReveal();
 
-  // Personalized greeting via ?kam=Vardas or ?kam=teveliai
-  const { greeting, slug } = useMemo(() => {
-    if (typeof window === "undefined") return { greeting: "Mielas Svety,", slug: undefined };
+  // Resolve ?kam=slug — first try guests table, fallback to formatting the param
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const kam = params.get("kam")?.trim();
-    const slug = kam ?? undefined;
-    if (!kam) return { greeting: "Mielas Svety,", slug };
+    if (!kam) return;
+    setSlug(kam);
     const lower = kam.toLowerCase();
-    if (lower === "teveliai" || lower === "tėveliai")
-      return { greeting: "Mieli Tėveliai,", slug };
-    if (lower === "draugai") return { greeting: "Mieli Draugai,", slug };
-    return { greeting: `Miela${kam.endsWith("a") || kam.endsWith("ė") ? "" : "s"} ${kam},`, slug };
+    (async () => {
+      const { data } = await supabase
+        .from("guests")
+        .select("display_name, greeting")
+        .eq("slug", lower)
+        .maybeSingle();
+      if (data) {
+        setGreeting(data.greeting || `Miela${data.display_name.endsWith("a") || data.display_name.endsWith("ė") ? "" : "s"} ${data.display_name},`);
+        return;
+      }
+      // Fallback: known shortcuts
+      if (lower === "teveliai" || lower === "tėveliai") {
+        setGreeting("Mieli Tėveliai,");
+        return;
+      }
+      if (lower === "draugai") {
+        setGreeting("Mieli Draugai,");
+        return;
+      }
+      const pretty = kam.charAt(0).toUpperCase() + kam.slice(1).toLowerCase();
+      setGreeting(`Miela${pretty.endsWith("a") || pretty.endsWith("ė") ? "" : "s"} ${pretty},`);
+    })();
   }, []);
 
   useEffect(() => {
-    if (introDone) {
-      // attempt to start music after the user gesture (open letter)
-      setMusicOn(true);
-    }
+    if (introDone) setMusicOn(true);
   }, [introDone]);
 
   return (
@@ -85,90 +116,101 @@ function Index() {
       )}
 
       {/* HERO */}
-      <header
-        className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 text-center"
-      >
+      <header className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 text-center">
         <div className="absolute inset-0">
           <img
             src={hero}
             alt=""
             width={1920}
-            height={1080}
+            height={1280}
             className="h-full w-full object-cover"
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, color-mix(in oklab, var(--ivory) 55%, transparent), color-mix(in oklab, var(--ivory) 80%, transparent) 70%, var(--ivory))",
+                "linear-gradient(180deg, color-mix(in oklab, var(--moss-deep) 35%, transparent) 0%, color-mix(in oklab, var(--ivory) 30%, transparent) 50%, var(--ivory) 100%)",
             }}
           />
         </div>
 
         <div className="relative z-10 mx-auto max-w-3xl animate-fade-up" style={{ animationDelay: "0.3s" }}>
-          <p className="hairline justify-center">
-            Vestuvės · 2026
+          <p className="hairline justify-center text-ivory" style={{ color: "var(--ivory)" }}>
+            ◈  Vestuvės · MMXXVI  ◈
           </p>
-          <h1 className="mt-8 font-serif text-6xl text-primary text-balance md:text-8xl lg:text-9xl">
+          <h1 className="mt-10 font-script text-7xl text-balance text-ivory drop-shadow-lg md:text-9xl lg:text-[12rem]" style={{ color: "var(--ivory)", lineHeight: 0.95 }}>
             Matas
-            <span className="mx-3 italic text-accent-foreground/70">&</span>
+            <span className="mx-2 italic" style={{ color: "color-mix(in oklab, var(--gold) 80%, var(--ivory))" }}>&amp;</span>
             Greta
           </h1>
-          <div className="mt-10 flex items-center justify-center gap-6 font-serif text-lg italic text-foreground/80 md:text-xl">
-            <span>2026.09.06</span>
-            <img src={leaf} alt="" width={28} height={28} className="opacity-70" />
+          <div
+            className="mt-8 flex items-center justify-center gap-6 font-display text-sm uppercase md:text-base"
+            style={{ color: "var(--ivory)", letterSpacing: "0.4em" }}
+          >
+            <span>06 · IX · 2026</span>
+            <img src={leaf} alt="" width={28} height={28} className="opacity-80" />
             <span>Vilnius</span>
           </div>
-          <p className="mt-8 font-serif text-xl italic text-muted-foreground md:text-2xl">
+          <p className="mt-10 font-serif text-xl italic md:text-2xl" style={{ color: "color-mix(in oklab, var(--ivory) 90%, transparent)" }}>
             „Dvi sielos, viena istorija."
           </p>
         </div>
 
         <div
           aria-hidden="true"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.4em] text-primary/60 animate-shimmer"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 font-display text-xs uppercase animate-shimmer"
+          style={{ color: "var(--ivory)", letterSpacing: "0.5em" }}
         >
-          Slinkite žemyn
+          ↓  Slinkite žemyn  ↓
         </div>
       </header>
 
       {/* COUNTDOWN */}
-      <section className="relative px-6 py-24 sm:py-32">
-        <div className="mx-auto max-w-4xl text-center reveal">
+      <section className="relative px-6 py-28 sm:py-36">
+        <div className="mx-auto max-w-5xl text-center reveal">
           <p className="hairline justify-center">Iki mūsų dienos</p>
-          <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+          <h2 className="mt-8 font-script text-6xl text-primary md:text-7xl">
             Skaičiuojame minutes
           </h2>
-          <div className="mt-12">
+          <p className="mt-4 font-serif text-lg italic text-muted-foreground md:text-xl">
+            kol pasakysime „taip"
+          </p>
+          <div className="mt-16">
             <Countdown />
           </div>
         </div>
       </section>
 
-      {/* STORY / OPENING WORDS */}
+      {/* OPENING WORDS */}
       <section className="relative px-6 py-24">
         <div className="mx-auto max-w-2xl text-center reveal">
-          <p className="hairline justify-center">Mūsų istorija</p>
-          <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+          <div className="flourish mb-8">
+            <img src={leaf} alt="" width={32} height={32} className="opacity-70" />
+          </div>
+          <h2 className="font-script text-5xl text-primary md:text-6xl">
             Su meile kviečiame Jus
           </h2>
-          <p className="mt-8 font-serif text-xl italic leading-relaxed text-foreground/85 md:text-2xl">
+          <p className="mt-10 font-serif text-xl italic leading-relaxed text-foreground/85 md:text-2xl">
             Šią dieną mes ištarsime &bdquo;taip&ldquo; ir pradėsime naują skyrių.
             Norime, kad būtumėte šalia &mdash; su Jūsų šypsenomis, ašaromis ir
             sveikinimais ši diena taps dar gražesnė.
           </p>
-          <div className="mt-10 flex justify-center">
-            <img src={leaf} alt="" width={56} height={56} className="opacity-60" />
-          </div>
         </div>
       </section>
 
       {/* SCHEDULE */}
-      <section id="programa" className="relative bg-card/40 px-6 py-24 sm:py-32">
+      <section
+        id="programa"
+        className="relative px-6 py-28 sm:py-36"
+        style={{
+          background:
+            "linear-gradient(180deg, var(--ivory), color-mix(in oklab, var(--moss) 8%, var(--ivory)) 50%, var(--ivory))",
+        }}
+      >
         <div className="mx-auto max-w-5xl">
-          <div className="mb-16 text-center reveal">
+          <div className="mb-20 text-center reveal">
             <p className="hairline justify-center">Dienos programa</p>
-            <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+            <h2 className="mt-8 font-script text-6xl text-primary md:text-7xl">
               Kaip skleisis mūsų diena
             </h2>
           </div>
@@ -177,30 +219,42 @@ function Index() {
       </section>
 
       {/* VENUE / MAP */}
-      <section id="vieta" className="relative px-6 py-24 sm:py-32">
-        <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-2 md:items-center">
+      <section id="vieta" className="relative px-6 py-28 sm:py-36">
+        <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-2 md:items-center">
           <div className="reveal">
-            <p className="hairline">Vieta</p>
-            <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+            <p className="hairline">Ceremonija</p>
+            <h2 className="mt-6 font-script text-5xl text-primary md:text-6xl">
               Šv. Kazimiero bažnyčia
             </h2>
-            <p className="mt-4 font-serif text-lg italic text-muted-foreground">
-              Didžioji g. 34, Vilnius
+            <p className="mt-3 font-serif text-lg italic text-muted-foreground md:text-xl">
+              Didžioji g. 34, Vilnius · 15:00
             </p>
-            <p className="mt-6 font-serif text-base leading-relaxed text-foreground/80">
-              Ceremonija prasidės <em>15:00</em>. Maloniai prašome atvykti
-              bent 15 minučių anksčiau.
+            <p className="mt-6 font-serif text-base leading-relaxed text-foreground/80 md:text-lg">
+              Maloniai prašome atvykti <em>15–20 minučių anksčiau</em> &mdash; kad
+              galėtume drauge ramiai pasitikti ceremonijos pradžią.
             </p>
-            <p className="mt-8 font-serif text-base leading-relaxed text-foreground/80">
-              <em>Vakarinė dalis</em> &mdash; 18:00. Tiksli pokylio vieta bus
-              atskleista artėjant šventei.
+
+            <div className="my-10 flourish" />
+
+            <p className="hairline">Vakarinė dalis</p>
+            <h2 className="mt-6 font-script text-5xl text-primary md:text-6xl">
+              Restoranas „Elven"
+            </h2>
+            <p className="mt-3 font-serif text-lg italic text-muted-foreground md:text-xl">
+              Gucevičiaus g., Vilnius · 18:00
+            </p>
+            <p className="mt-6 font-serif text-base leading-relaxed text-foreground/80 md:text-lg">
+              Iškilminga vakarienė, tostai, šokiai &mdash; <em>tik suaugusiems</em>.
             </p>
           </div>
-          <div className="reveal overflow-hidden rounded-sm border border-border shadow-soft">
+          <div
+            className="reveal overflow-hidden rounded-sm border border-border shadow-luxe"
+            style={{ borderColor: "color-mix(in oklab, var(--moss-deep) 25%, transparent)" }}
+          >
             <iframe
               title="Šv. Kazimiero bažnyčia"
               src="https://www.openstreetmap.org/export/embed.html?bbox=25.288%2C54.677%2C25.292%2C54.679&layer=mapnik&marker=54.678%2C25.290"
-              className="h-80 w-full md:h-96"
+              className="h-[28rem] w-full md:h-[32rem]"
               loading="lazy"
             />
           </div>
@@ -208,61 +262,91 @@ function Index() {
       </section>
 
       {/* DRESS CODE */}
-      <section className="relative bg-card/40 px-6 py-24 sm:py-32">
-        <div className="mx-auto max-w-2xl text-center reveal">
+      <section
+        className="relative px-6 py-28 sm:py-36"
+        style={{
+          background:
+            "linear-gradient(180deg, var(--ivory), color-mix(in oklab, var(--moss) 10%, var(--ivory)))",
+        }}
+      >
+        <div className="mx-auto max-w-3xl text-center reveal">
           <p className="hairline justify-center">Aprangos kodas</p>
-          <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+          <h2 className="mt-8 font-script text-6xl text-primary md:text-7xl">
             Elegantiška šventinė
           </h2>
-          <p className="mt-8 font-serif text-xl italic text-foreground/85">
-            Pageidaujame šviesių, gamtos atspalvių &mdash; šalavijo, kremo,
-            smėlio, perlo, šampano. Prašome vengti baltos spalvos.
+          <p className="mt-8 font-serif text-xl italic text-foreground/85 md:text-2xl">
+            Damos &mdash; <em>ilgos suknelės</em>. Ponai &mdash; <em>kostiumai</em>.
+            Pageidaujame gamtos atspalvių: samanų, šalavijo, kremo, smėlio, šampano.
+            Prašome vengti baltos spalvos.
           </p>
-          <div className="mt-10 flex justify-center gap-4">
-            {["#f5f0e8", "#dce5d4", "#a8c0a0", "#7d9b76", "#c9a878"].map((c) => (
-              <span
-                key={c}
-                className="h-10 w-10 rounded-full border border-border shadow-soft"
-                style={{ backgroundColor: c }}
-                aria-hidden="true"
-              />
+          <div className="mt-12 flex flex-wrap justify-center gap-6">
+            {dressColors.map((c) => (
+              <div key={c.c} className="flex flex-col items-center gap-2">
+                <span
+                  className="h-14 w-14 rounded-full border shadow-soft"
+                  style={{
+                    backgroundColor: c.c,
+                    borderColor: "color-mix(in oklab, var(--moss-deep) 20%, transparent)",
+                  }}
+                  aria-hidden="true"
+                />
+                <span className="font-display text-[0.6rem] uppercase text-muted-foreground" style={{ letterSpacing: "0.25em" }}>
+                  {c.n}
+                </span>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* REGISTRY */}
-      <section className="relative px-6 py-24 sm:py-32">
-        <div className="mx-auto max-w-2xl text-center reveal">
+      {/* REGISTRY — vokeliai */}
+      <section className="relative px-6 py-28 sm:py-36">
+        <div className="mx-auto max-w-3xl text-center reveal">
           <p className="hairline justify-center">Dovanos</p>
-          <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+          <h2 className="mt-8 font-script text-6xl text-primary md:text-7xl">
             Brangiausia dovana &mdash; Jūs
           </h2>
-          <p className="mt-8 font-serif text-xl italic leading-relaxed text-foreground/85">
-            Didžiausia dovana mums &mdash; Jūsų buvimas šalia. Tačiau jei
-            norėtumėte prisidėti prie mūsų vestuvinės kelionės svajonės,
-            būsime labai dėkingi.
+          <p className="mt-8 font-serif text-xl italic leading-relaxed text-foreground/85 md:text-2xl">
+            Didžiausia dovana mums &mdash; Jūsų buvimas šalia. Tačiau jei norėtumėte
+            prisidėti prie mūsų vestuvinės kelionės svajonės, mieliausiai priimsime
+            dovanas <em>vokeliuose</em>.
           </p>
-          <div className="mt-10 inline-block rounded-sm border border-border bg-card/60 px-8 py-6 text-left backdrop-blur-sm">
-            <p className="text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-              Sąskaita medaus mėnesiui
+
+          <div
+            className="mx-auto mt-14 max-w-md rounded-sm border bg-card/70 p-10 shadow-luxe backdrop-blur-sm"
+            style={{ borderColor: "color-mix(in oklab, var(--moss-deep) 25%, transparent)" }}
+          >
+            {/* Envelope icon */}
+            <svg width="64" height="48" viewBox="0 0 64 48" className="mx-auto mb-6 opacity-80">
+              <rect x="2" y="6" width="60" height="36" rx="2" fill="none" stroke="var(--moss-deep)" strokeWidth="1.2" />
+              <path d="M2 8 L32 28 L62 8" fill="none" stroke="var(--moss-deep)" strokeWidth="1.2" />
+              <circle cx="32" cy="34" r="4" fill="var(--gold)" opacity="0.6" />
+            </svg>
+            <p className="font-display text-xs uppercase text-muted-foreground" style={{ letterSpacing: "0.4em" }}>
+              ✦  Vokelis  ✦
             </p>
-            <p className="mt-3 font-serif text-2xl italic text-primary">
-              LT00 0000 0000 0000 0000
+            <p className="mt-6 font-script text-3xl text-primary md:text-4xl">
+              Matas &amp; Greta
             </p>
-            <p className="mt-1 font-serif text-sm italic text-muted-foreground">
-              Matas ir Greta
+            <p className="mt-3 font-serif text-base italic text-muted-foreground">
+              Vokeliai laukiami šventės vietoje
             </p>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="relative bg-card/40 px-6 py-24 sm:py-32">
+      <section
+        className="relative px-6 py-28 sm:py-36"
+        style={{
+          background:
+            "linear-gradient(180deg, var(--ivory), color-mix(in oklab, var(--moss) 8%, var(--ivory)))",
+        }}
+      >
         <div className="mx-auto max-w-2xl">
-          <div className="mb-12 text-center reveal">
+          <div className="mb-16 text-center reveal">
             <p className="hairline justify-center">Dažni klausimai</p>
-            <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+            <h2 className="mt-8 font-script text-6xl text-primary md:text-7xl">
               Gerai žinoti
             </h2>
           </div>
@@ -270,15 +354,16 @@ function Index() {
             {faqItems.map((it) => (
               <details
                 key={it.q}
-                className="reveal group rounded-sm border border-border bg-card/70 p-6 transition-all open:shadow-soft"
+                className="reveal group rounded-sm border bg-card/80 p-7 transition-all open:shadow-soft"
+                style={{ borderColor: "color-mix(in oklab, var(--moss-deep) 18%, transparent)" }}
               >
-                <summary className="flex cursor-pointer items-center justify-between gap-4 font-serif text-lg italic text-foreground">
+                <summary className="flex cursor-pointer items-center justify-between gap-4 font-serif text-lg italic text-foreground md:text-xl">
                   {it.q}
-                  <span className="text-2xl text-primary transition-transform group-open:rotate-45">
+                  <span className="font-display text-2xl text-primary transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
-                <p className="mt-4 font-serif text-base leading-relaxed text-muted-foreground">
+                <p className="mt-5 font-serif text-base leading-relaxed text-muted-foreground md:text-lg">
                   {it.a}
                 </p>
               </details>
@@ -288,14 +373,14 @@ function Index() {
       </section>
 
       {/* RSVP */}
-      <section id="rsvp" className="relative px-6 py-24 sm:py-32">
+      <section id="rsvp" className="relative px-6 py-28 sm:py-36">
         <div className="mx-auto max-w-3xl">
-          <div className="mb-12 text-center reveal">
+          <div className="mb-14 text-center reveal">
             <p className="hairline justify-center">RSVP</p>
-            <h2 className="mt-6 font-serif text-4xl italic text-primary md:text-5xl">
+            <h2 className="mt-8 font-script text-6xl text-primary md:text-7xl">
               Patvirtinkite dalyvavimą
             </h2>
-            <p className="mt-4 font-serif text-lg italic text-muted-foreground">
+            <p className="mt-5 font-serif text-lg italic text-muted-foreground md:text-xl">
               Maloniai prašome iki 2026 m. liepos 1 d.
             </p>
           </div>
@@ -306,11 +391,17 @@ function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="relative px-6 pb-16 pt-12 text-center">
-        <img src={leaf} alt="" width={48} height={48} loading="lazy" className="mx-auto opacity-60" />
-        <p className="mt-6 font-serif text-3xl italic text-primary">Matas &amp; Greta</p>
-        <p className="mt-2 text-xs uppercase tracking-[0.4em] text-muted-foreground">
-          2026.09.06 · Vilnius
+      <footer
+        className="relative px-6 pb-20 pt-16 text-center"
+        style={{
+          background:
+            "linear-gradient(180deg, var(--ivory), color-mix(in oklab, var(--moss-deep) 25%, var(--ivory)))",
+        }}
+      >
+        <img src={leaf} alt="" width={56} height={56} loading="lazy" className="mx-auto opacity-70" />
+        <p className="mt-8 font-script text-5xl text-primary md:text-6xl">Matas &amp; Greta</p>
+        <p className="mt-4 font-display text-xs uppercase text-muted-foreground" style={{ letterSpacing: "0.5em" }}>
+          06 · IX · 2026 · Vilnius
         </p>
       </footer>
     </div>
