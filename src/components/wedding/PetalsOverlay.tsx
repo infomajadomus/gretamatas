@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import petal from "@/assets/petal.png";
 import leaf from "@/assets/leaf.png";
 
-const COUNT = 18;
+const COUNT = 28;
 
 export function PetalsOverlay() {
   const petals = useMemo(
