@@ -40,11 +40,11 @@ export function PetalsOverlay() {
             left: `${p.left}%`,
             width: p.size,
             height: "auto",
-            opacity: p.opacity,
             transform: `rotate(${p.rotate}deg)`,
             animation: `petal-fall ${p.duration}s linear ${p.delay}s infinite`,
             ["--drift" as string]: `${p.drift}px`,
-            filter: "drop-shadow(0 4px 6px rgba(125,155,118,0.15))",
+            ["--max-op" as string]: String(p.opacity),
+            filter: "drop-shadow(0 4px 8px rgba(50,80,55,0.18))",
           }}
         />
       ))}
