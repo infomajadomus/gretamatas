@@ -136,20 +136,28 @@ function Index() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-3xl animate-fade-up" style={{ animationDelay: "0.3s" }}>
-          <p className="hairline justify-center text-ivory" style={{ color: "var(--ivory)" }}>
-            ◈  Vestuvės · MMXXVI  ◈
+        <div className="relative z-10 mx-auto max-w-5xl animate-fade-up px-4" style={{ animationDelay: "0.3s" }}>
+          <p className="hairline justify-center" style={{ color: "var(--ivory)" }}>
+            ◈  Vestuvės · 2026  ◈
           </p>
-          <h1 className="mt-10 font-script text-7xl text-balance text-ivory drop-shadow-lg md:text-9xl lg:text-[12rem]" style={{ color: "var(--ivory)", lineHeight: 0.95 }}>
+          <h1
+            className="mt-10 font-serif italic text-balance text-ivory drop-shadow-lg"
+            style={{
+              color: "var(--ivory)",
+              lineHeight: 1.05,
+              fontSize: "clamp(3rem, 9vw, 8rem)",
+              fontWeight: 400,
+            }}
+          >
             Matas
-            <span className="mx-2 italic" style={{ color: "color-mix(in oklab, var(--gold) 80%, var(--ivory))" }}>&amp;</span>
+            <span className="mx-3 not-italic" style={{ color: "color-mix(in oklab, var(--gold) 80%, var(--ivory))", fontWeight: 300 }}>&amp;</span>
             Greta
           </h1>
           <div
-            className="mt-8 flex items-center justify-center gap-6 font-display text-sm uppercase md:text-base"
+            className="mt-8 flex flex-wrap items-center justify-center gap-4 font-display text-sm uppercase md:gap-6 md:text-base"
             style={{ color: "var(--ivory)", letterSpacing: "0.4em" }}
           >
-            <span>06 · IX · 2026</span>
+            <span>2026 · 09 · 06</span>
             <img src={leaf} alt="" width={28} height={28} className="opacity-80" />
             <span>Vilnius</span>
           </div>
