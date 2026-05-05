@@ -35,11 +35,9 @@ export function RsvpForm({ inviteSlug }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [now, setNow] = useState<number | null>(null);
-  useState(() => undefined);
-  if (typeof window !== "undefined" && now === null) {
-    // set on first client render
-    setTimeout(() => setNow(Date.now()), 0);
-  }
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
   const closed = now !== null && now > DEADLINE;
 
   if (closed) {
