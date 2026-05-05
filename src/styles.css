@@ -118,7 +118,7 @@
   }
   .font-serif { font-family: var(--font-serif); }
   .font-display { font-family: var(--font-display); letter-spacing: 0.04em; }
-  .font-script { font-family: var(--font-script); }
+  .font-script { font-family: var(--font-script); font-style: italic; font-weight: 500; letter-spacing: 0.005em; }
   .font-sans { font-family: var(--font-sans); }
 }
 
