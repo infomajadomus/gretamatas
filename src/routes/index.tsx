@@ -411,7 +411,7 @@ function Index() {
         <img src={leaf} alt="" width={56} height={56} loading="lazy" className="mx-auto opacity-70" />
         <p className="mt-8 font-script text-5xl text-primary md:text-6xl">Matas &amp; Greta</p>
         <p className="mt-4 font-display text-xs uppercase text-muted-foreground" style={{ letterSpacing: "0.5em" }}>
-          06 · IX · 2026 · Vilnius
+          2026 · 09 · 06 · Vilnius
         </p>
       </footer>
     </div>
