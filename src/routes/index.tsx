@@ -286,8 +286,8 @@ function Index() {
           </h2>
           <p className="mt-8 font-serif text-xl italic text-foreground/85 md:text-2xl">
             Damos &mdash; <em>ilgos suknelės</em>. Ponai &mdash; <em>kostiumai</em>.
-            Pageidaujame gamtos atspalvių: samanų, šalavijo, kremo, smėlio, šampano.
-            Prašome vengti baltos spalvos.
+            Pageidaujame prabangių, gilių spalvų: tamsiai mėlynos, smaragdo, slyvinės,
+            šokolado, bronzos, antracito. Prašome vengti baltos ir burgundinės.
           </p>
           <div className="mt-12 flex flex-wrap justify-center gap-6">
             {dressColors.map((c) => (
