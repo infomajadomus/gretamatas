@@ -49,7 +49,7 @@ const faqItems = [
   },
   {
     q: "Iki kada laukiame Jūsų atsakymo?",
-    a: "Maloniai prašome patvirtinti dalyvavimą iki 2026 m. liepos 1 d.",
+    a: "Maloniai prašome patvirtinti dalyvavimą iki 2026 m. liepos 6 d. Po šios datos registracija užsidaro.",
   },
 ];
 
