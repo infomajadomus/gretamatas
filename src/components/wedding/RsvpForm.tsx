@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -27,11 +27,32 @@ interface Props {
   inviteSlug?: string;
 }
 
+const DEADLINE = new Date("2026-07-06T23:59:59+03:00").getTime();
+
 export function RsvpForm({ inviteSlug }: Props) {
   const [attending, setAttending] = useState<"yes" | "no">("yes");
   const [isCouple, setIsCouple] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
+  const closed = now !== null && now > DEADLINE;
+
+  if (closed) {
+    return (
+      <div className="mx-auto max-w-xl rounded-sm border border-border bg-card/60 p-10 text-center backdrop-blur-sm">
+        <p className="hairline justify-center">Registracija uždaryta</p>
+        <h3 className="mt-6 font-serif text-3xl italic text-primary md:text-4xl">
+          Atsakymų laukėme iki 2026 m. liepos 6 d.
+        </h3>
+        <p className="mt-4 font-serif text-lg italic text-muted-foreground">
+          Jei vis dar norite pranešti — susisiekite tiesiogiai su Matu ar Greta.
+        </p>
+      </div>
+    );
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

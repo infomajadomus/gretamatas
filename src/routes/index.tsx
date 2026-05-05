@@ -49,7 +49,7 @@ const faqItems = [
   },
   {
     q: "Iki kada laukiame Jūsų atsakymo?",
-    a: "Maloniai prašome patvirtinti dalyvavimą iki 2026 m. liepos 1 d.",
+    a: "Maloniai prašome patvirtinti dalyvavimą iki 2026 m. liepos 6 d. Po šios datos registracija užsidaro.",
   },
 ];
 
@@ -391,7 +391,7 @@ function Index() {
               Patvirtinkite dalyvavimą
             </h2>
             <p className="mt-5 font-serif text-lg italic text-muted-foreground md:text-xl">
-              Maloniai prašome iki 2026 m. liepos 1 d.
+              Maloniai prašome iki 2026 m. liepos 6 d.
             </p>
           </div>
           <div className="reveal">

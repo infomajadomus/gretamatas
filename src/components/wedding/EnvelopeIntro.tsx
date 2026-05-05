@@ -187,40 +187,46 @@ export function EnvelopeIntro({ greeting, onOpen }: Props) {
             }}
           >
             <div
-              className="relative flex h-24 w-24 items-center justify-center rounded-full"
+              className="relative flex h-28 w-28 items-center justify-center rounded-full"
               style={{
                 background:
-                  "radial-gradient(circle at 32% 28%, #b04545 0%, #8a2a2a 40%, #5a1414 90%)",
+                  "radial-gradient(circle at 30% 25%, #f5d486 0%, #d4a24a 30%, #a87523 65%, #6e4a14 100%)",
                 boxShadow:
-                  "inset -6px -6px 14px rgba(0,0,0,0.55), inset 6px 6px 14px rgba(255,255,255,0.18), 0 8px 22px -6px rgba(60,10,10,0.55)",
+                  "inset -7px -7px 16px rgba(60,35,5,0.55), inset 7px 7px 16px rgba(255,240,200,0.45), 0 10px 28px -8px rgba(80,50,10,0.55), 0 0 0 1px rgba(110,74,20,0.6)",
+                clipPath:
+                  "polygon(50% 0%, 62% 8%, 78% 4%, 86% 18%, 98% 26%, 94% 44%, 100% 58%, 90% 72%, 96% 86%, 80% 92%, 70% 100%, 54% 94%, 38% 100%, 26% 92%, 12% 96%, 6% 80%, 0% 64%, 6% 48%, 0% 34%, 14% 22%, 10% 6%, 28% 8%, 38% 0%)",
               }}
             >
-              {/* drip edges */}
               <div
                 className="absolute inset-0 rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle at 70% 80%, rgba(0,0,0,0.35), transparent 40%), radial-gradient(circle at 20% 70%, rgba(0,0,0,0.25), transparent 35%)",
+                    "radial-gradient(circle at 72% 78%, rgba(40,25,5,0.45), transparent 45%), radial-gradient(circle at 22% 70%, rgba(40,25,5,0.3), transparent 38%)",
                   mixBlendMode: "multiply",
                 }}
               />
               <span
                 className="relative font-serif italic"
                 style={{
-                  color: "#f3e1c7",
-                  fontSize: "1.7rem",
-                  fontWeight: 500,
-                  textShadow: "0 1px 2px rgba(0,0,0,0.4)",
+                  color: "#3a2410",
+                  fontSize: "1.85rem",
+                  fontWeight: 600,
+                  textShadow: "0 1px 0 rgba(255,235,190,0.5), 0 -1px 0 rgba(50,30,5,0.4)",
                   letterSpacing: "0.02em",
                 }}
               >
                 M&amp;G
               </span>
-              {/* inner ring */}
               <span
-                className="pointer-events-none absolute inset-2 rounded-full"
+                className="pointer-events-none absolute inset-3 rounded-full"
                 style={{
-                  border: "1px dashed rgba(243,225,199,0.35)",
+                  border: "1px solid rgba(60,38,10,0.5)",
+                }}
+              />
+              <span
+                className="pointer-events-none absolute inset-4 rounded-full"
+                style={{
+                  border: "1px dashed rgba(60,38,10,0.35)",
                 }}
               />
             </div>
