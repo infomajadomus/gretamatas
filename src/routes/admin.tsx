@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import {
-  adminCheck,
-  adminLogin,
-  adminLogout,
-  adminListRsvps,
-  adminListGuests,
-  adminUpsertGuest,
-  adminDeleteGuest,
-} from "@/server/admin.functions";
+import { createServerFn } from '@tanstack/start'
+import * as admin from '@/server/admin.functions'
+
+const adminCheck = createServerFn().handler(admin.adminCheck)
+const adminLogin = createServerFn().handler(admin.adminLogin)
+const adminLogout = createServerFn().handler(admin.adminLogout)
+const adminListRsvps = createServerFn().handler(admin.adminListRsvps)
+const adminListGuests = createServerFn().handler(admin.adminListGuests)
+const adminUpsertGuest = createServerFn().handler(admin.adminUpsertGuest)
+const adminDeleteGuest = createServerFn().handler(admin.adminDeleteGuest)
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin")({
