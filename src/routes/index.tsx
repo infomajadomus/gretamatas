@@ -41,7 +41,7 @@ const faqItems = [
   },
   {
     q: "Kokia aprangos forma?",
-    a: "Damos — ilgos suknelės. Ponai — kostiumai. Spalvos — gamtos atspalviai (samanų, šalavijo, kreminės, smėlio). Prašome vengti baltos.",
+    a: "Damos — ilgos suknelės. Ponai — kostiumai. Pageidaujame tamsių, prabangių spalvų: tamsiai mėlynos, smaragdo, slyvinės, šokolado, bronzos, antracito. Prašome vengti baltos ir burgundinės.",
   },
   {
     q: "Ar bus parkavimo vieta?",
