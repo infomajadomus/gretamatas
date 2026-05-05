@@ -41,7 +41,7 @@ const faqItems = [
   },
   {
     q: "Kokia aprangos forma?",
-    a: "Damos — ilgos suknelės. Ponai — kostiumai. Spalvos — gamtos atspalviai (samanų, šalavijo, kreminės, smėlio). Prašome vengti baltos.",
+    a: "Damos — ilgos suknelės. Ponai — kostiumai. Pageidaujame tamsių, prabangių spalvų: tamsiai mėlynos, smaragdo, slyvinės, šokolado, bronzos, antracito. Prašome vengti baltos ir burgundinės.",
   },
   {
     q: "Ar bus parkavimo vieta?",
@@ -54,12 +54,14 @@ const faqItems = [
 ];
 
 const dressColors = [
-  { c: "#2d3a2a", n: "Tamsios samanos" },
-  { c: "#4a6741", n: "Miškas" },
-  { c: "#87a878", n: "Šalavijas" },
-  { c: "#c4b89a", n: "Smėlis" },
-  { c: "#e8e0d0", n: "Kreminė" },
-  { c: "#c9a878", n: "Šampanas" },
+  { c: "#0f1b3d", n: "Tamsiai mėlyna" },
+  { c: "#1e3a5f", n: "Tamsi mėlyna" },
+  { c: "#2d5016", n: "Smaragdas" },
+  { c: "#4a1942", n: "Slyvinė" },
+  { c: "#3d2817", n: "Šokoladas" },
+  { c: "#6b4423", n: "Bronzinė" },
+  { c: "#1a3c5e", n: "Naktinė" },
+  { c: "#2d2d2d", n: "Antracitas" },
 ];
 
 function Index() {
@@ -134,20 +136,28 @@ function Index() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-3xl animate-fade-up" style={{ animationDelay: "0.3s" }}>
-          <p className="hairline justify-center text-ivory" style={{ color: "var(--ivory)" }}>
-            ◈  Vestuvės · MMXXVI  ◈
+        <div className="relative z-10 mx-auto max-w-5xl animate-fade-up px-4" style={{ animationDelay: "0.3s" }}>
+          <p className="hairline justify-center" style={{ color: "var(--ivory)" }}>
+            ◈  Vestuvės · 2026  ◈
           </p>
-          <h1 className="mt-10 font-script text-7xl text-balance text-ivory drop-shadow-lg md:text-9xl lg:text-[12rem]" style={{ color: "var(--ivory)", lineHeight: 0.95 }}>
+          <h1
+            className="mt-10 font-serif italic text-balance text-ivory drop-shadow-lg"
+            style={{
+              color: "var(--ivory)",
+              lineHeight: 1.05,
+              fontSize: "clamp(3rem, 9vw, 8rem)",
+              fontWeight: 400,
+            }}
+          >
             Matas
-            <span className="mx-2 italic" style={{ color: "color-mix(in oklab, var(--gold) 80%, var(--ivory))" }}>&amp;</span>
+            <span className="mx-3 not-italic" style={{ color: "color-mix(in oklab, var(--gold) 80%, var(--ivory))", fontWeight: 300 }}>&amp;</span>
             Greta
           </h1>
           <div
-            className="mt-8 flex items-center justify-center gap-6 font-display text-sm uppercase md:text-base"
+            className="mt-8 flex flex-wrap items-center justify-center gap-4 font-display text-sm uppercase md:gap-6 md:text-base"
             style={{ color: "var(--ivory)", letterSpacing: "0.4em" }}
           >
-            <span>06 · IX · 2026</span>
+            <span>2026 · 09 · 06</span>
             <img src={leaf} alt="" width={28} height={28} className="opacity-80" />
             <span>Vilnius</span>
           </div>
@@ -276,8 +286,8 @@ function Index() {
           </h2>
           <p className="mt-8 font-serif text-xl italic text-foreground/85 md:text-2xl">
             Damos &mdash; <em>ilgos suknelės</em>. Ponai &mdash; <em>kostiumai</em>.
-            Pageidaujame gamtos atspalvių: samanų, šalavijo, kremo, smėlio, šampano.
-            Prašome vengti baltos spalvos.
+            Pageidaujame prabangių, gilių spalvų: tamsiai mėlynos, smaragdo, slyvinės,
+            šokolado, bronzos, antracito. Prašome vengti baltos ir burgundinės.
           </p>
           <div className="mt-12 flex flex-wrap justify-center gap-6">
             {dressColors.map((c) => (
@@ -401,7 +411,7 @@ function Index() {
         <img src={leaf} alt="" width={56} height={56} loading="lazy" className="mx-auto opacity-70" />
         <p className="mt-8 font-script text-5xl text-primary md:text-6xl">Matas &amp; Greta</p>
         <p className="mt-4 font-display text-xs uppercase text-muted-foreground" style={{ letterSpacing: "0.5em" }}>
-          06 · IX · 2026 · Vilnius
+          2026 · 09 · 06 · Vilnius
         </p>
       </footer>
     </div>
