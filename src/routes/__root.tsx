@@ -30,14 +30,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Greta & Matas" },
+      { name: "description", content: "Vestuvių pakvietimas" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Greta & Matas" },
+      { property: "og:description", content: "Vestuvių pakvietimas" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Greta & Matas" },
+      { name: "twitter:description", content: "Vestuvių pakvietimas" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6c2ee3a5-ae90-424e-85b1-53cfa5a7950d/id-preview-d43a295d--77a76d72-33df-49f5-a400-9a96301948fc.lovable.app-1777977585946.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6c2ee3a5-ae90-424e-85b1-53cfa5a7950d/id-preview-d43a295d--77a76d72-33df-49f5-a400-9a96301948fc.lovable.app-1777977585946.png" },
     ],
     links: [
       {
