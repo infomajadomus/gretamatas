@@ -20,13 +20,15 @@ const labels: Record<keyof ReturnType<typeof diff>, string> = {
 };
 
 export function Countdown() {
-  const [t, setT] = useState(diff);
+  const [t, setT] = useState<ReturnType<typeof diff> | null>(null);
   useEffect(() => {
+    setT(diff());
     const i = setInterval(() => setT(diff()), 1000);
     return () => clearInterval(i);
   }, []);
 
-  const keys = Object.keys(t) as Array<keyof typeof t>;
+  const display = t ?? { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  const keys = Object.keys(display) as Array<keyof typeof display>;
 
   return (
     <div className="relative">
