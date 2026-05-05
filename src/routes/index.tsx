@@ -54,12 +54,14 @@ const faqItems = [
 ];
 
 const dressColors = [
-  { c: "#2d3a2a", n: "Tamsios samanos" },
-  { c: "#4a6741", n: "Miškas" },
-  { c: "#87a878", n: "Šalavijas" },
-  { c: "#c4b89a", n: "Smėlis" },
-  { c: "#e8e0d0", n: "Kreminė" },
-  { c: "#c9a878", n: "Šampanas" },
+  { c: "#0f1b3d", n: "Tamsiai mėlyna" },
+  { c: "#1e3a5f", n: "Tamsi mėlyna" },
+  { c: "#2d5016", n: "Smaragdas" },
+  { c: "#4a1942", n: "Slyvinė" },
+  { c: "#3d2817", n: "Šokoladas" },
+  { c: "#6b4423", n: "Bronzinė" },
+  { c: "#1a3c5e", n: "Naktinė" },
+  { c: "#2d2d2d", n: "Antracitas" },
 ];
 
 function Index() {
