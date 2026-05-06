@@ -188,6 +188,27 @@ function Index() {
           <div className="mt-16">
             <Countdown />
           </div>
+          {/* Hidden flower — admin shortcut */}
+          <Link
+            to="/admin"
+            aria-label="•"
+            title=""
+            className="mt-12 inline-flex h-10 w-10 items-center justify-center opacity-30 transition-all hover:opacity-90 hover:scale-110"
+          >
+            <svg viewBox="0 0 40 40" width="32" height="32" fill="none" aria-hidden="true">
+              <g stroke="var(--moss-deep)" strokeWidth="0.8" fill="color-mix(in oklab, var(--gold) 40%, transparent)">
+                <ellipse cx="20" cy="10" rx="4" ry="7" />
+                <ellipse cx="20" cy="30" rx="4" ry="7" />
+                <ellipse cx="10" cy="20" rx="7" ry="4" />
+                <ellipse cx="30" cy="20" rx="7" ry="4" />
+                <ellipse cx="13" cy="13" rx="5" ry="4" transform="rotate(-45 13 13)" />
+                <ellipse cx="27" cy="13" rx="5" ry="4" transform="rotate(45 27 13)" />
+                <ellipse cx="13" cy="27" rx="5" ry="4" transform="rotate(45 13 27)" />
+                <ellipse cx="27" cy="27" rx="5" ry="4" transform="rotate(-45 27 27)" />
+              </g>
+              <circle cx="20" cy="20" r="3" fill="var(--gold)" stroke="var(--moss-deep)" strokeWidth="0.6" />
+            </svg>
+          </Link>
         </div>
       </section>
 
