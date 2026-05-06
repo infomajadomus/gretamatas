@@ -34,10 +34,20 @@ export function RsvpForm({ inviteSlug }: Props) {
   const [isCouple, setIsCouple] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
+    setMounted(true);
     setNow(Date.now());
   }, []);
+
+  // Avoid SSR/hydration mismatches (form-filler extensions hijack <select>)
+  if (!mounted) {
+    return (
+      <div className="mx-auto h-[28rem] max-w-2xl rounded-sm border border-border bg-card/50 backdrop-blur-sm" aria-hidden="true" />
+    );
+  }
+
   const closed = now !== null && now > DEADLINE;
 
   if (closed) {
