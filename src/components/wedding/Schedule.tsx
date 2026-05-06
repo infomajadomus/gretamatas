@@ -12,7 +12,7 @@ const items: Item[] = [
     time: "15:00",
     title: "Santuokos ceremonija",
     place: "Šv. Kazimiero bažnyčia · Vilnius",
-    desc: "Kviečiame atvykti 15–20 min. anksčiau, kad galėtume drauge pasitikti šią akimirką.",
+    desc: "Kviečiame atvykti 15–20 min. anksčiau. Vaikučiai laukiami būtent čia.",
   },
   {
     time: "16:30",
@@ -20,13 +20,13 @@ const items: Item[] = [
     desc: "Po ceremonijos prie bažnyčios — pirmieji apkabinimai ir kadrai.",
   },
   {
-    time: "18:00",
+    time: "20:00",
     title: "Vakarinė dalis",
-    place: "Restoranas „Elven\" · Guceviciaus g., Vilnius",
-    desc: "Iškilminga vakarienė, tostai ir vakaro pradžia.",
+    place: "Restoranas „Elven\" · Gucevičiaus g., Vilnius",
+    desc: "Iškilminga vakarienė, tostai ir vakaro pradžia. Tik suaugusiems.",
   },
   {
-    time: "20:00",
+    time: "22:00",
     title: "Pirmasis šokis",
     desc: "Ir muzika, kuri nebenutils iki ryto.",
   },
