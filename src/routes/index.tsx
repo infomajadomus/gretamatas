@@ -251,7 +251,7 @@ function Index() {
               Restoranas „Elven"
             </h2>
             <p className="mt-3 font-serif text-lg italic text-muted-foreground md:text-xl">
-              Gucevičiaus g., Vilnius · 18:00
+              Gucevičiaus g., Vilnius · 20:00
             </p>
             <p className="mt-6 font-serif text-base leading-relaxed text-foreground/80 md:text-lg">
               Iškilminga vakarienė, tostai, šokiai &mdash; <em>tik suaugusiems</em>.
