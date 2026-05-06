@@ -33,19 +33,19 @@ export const Route = createFileRoute("/")({
 const faqItems = [
   {
     q: "Kada turėčiau atvykti?",
-    a: "Maloniai prašome atvykti į bažnyčią 15–20 minučių anksčiau, kad galėtume drauge ramiai pasitikti ceremonijos pradžią 15:00.",
+    a: "Maloniai prašome atvykti į Šv. Kazimiero bažnyčią 15–20 minučių anksčiau, kad galėtume drauge ramiai pasitikti ceremonijos pradžią 15:00.",
   },
   {
     q: "Ar galima atvykti su vaikais?",
-    a: "Į ceremoniją bažnyčioje vaikai laukiami. Tačiau vakarinė dalis restorane „Elven“ — tik suaugusiems. Norime, kad ir Jūs, ir tėveliai galėtų pailsėti ir mėgautis vakaru.",
+    a: "Vaikučiai laukiami tik bažnyčioje per santuokos ceremoniją. Vakarinė dalis restorane „Elven“ — tik suaugusiems. Norime, kad ir Jūs, ir tėveliai galėtų pailsėti ir mėgautis vakaru.",
   },
   {
     q: "Kokia aprangos forma?",
-    a: "Damos — ilgos suknelės. Ponai — kostiumai. Pageidaujame tamsių, prabangių spalvų: tamsiai mėlynos, smaragdo, slyvinės, šokolado, bronzos, antracito. Prašome vengti baltos ir burgundinės.",
+    a: "Damos — ilgos suknelės. Ponai — kostiumai. Aprangos kodo spalvas rasite skiltyje „Aprangos kodas“ aukščiau. Prašome vengti baltos ir burgundinės.",
   },
   {
-    q: "Ar bus parkavimo vieta?",
-    a: "Prie restorano „Elven“ rasite parkavimo vietų. Prie bažnyčios — miesto parkavimas, todėl atvykite anksčiau.",
+    q: "O kaip dovanos?",
+    a: "Brangiausia dovana — Jūsų buvimas šalia. Jei norėtumėte prisidėti prie mūsų svajonės — dovanas mieliausiai priimsime vokeliuose.",
   },
   {
     q: "Iki kada laukiame Jūsų atsakymo?",
