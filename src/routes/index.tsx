@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import hero from "@/assets/hero.jpg";
 import leaf from "@/assets/leaf.png";
@@ -33,19 +33,19 @@ export const Route = createFileRoute("/")({
 const faqItems = [
   {
     q: "Kada turėčiau atvykti?",
-    a: "Maloniai prašome atvykti į bažnyčią 15–20 minučių anksčiau, kad galėtume drauge ramiai pasitikti ceremonijos pradžią 15:00.",
+    a: "Maloniai prašome atvykti į Šv. Kazimiero bažnyčią 15–20 minučių anksčiau, kad galėtume drauge ramiai pasitikti ceremonijos pradžią 15:00.",
   },
   {
     q: "Ar galima atvykti su vaikais?",
-    a: "Į ceremoniją bažnyčioje vaikai laukiami. Tačiau vakarinė dalis restorane „Elven“ — tik suaugusiems. Norime, kad ir Jūs, ir tėveliai galėtų pailsėti ir mėgautis vakaru.",
+    a: "Vaikučiai laukiami tik bažnyčioje per santuokos ceremoniją. Vakarinė dalis restorane „Elven“ — tik suaugusiems. Norime, kad ir Jūs, ir tėveliai galėtų pailsėti ir mėgautis vakaru.",
   },
   {
     q: "Kokia aprangos forma?",
-    a: "Damos — ilgos suknelės. Ponai — kostiumai. Pageidaujame tamsių, prabangių spalvų: tamsiai mėlynos, smaragdo, slyvinės, šokolado, bronzos, antracito. Prašome vengti baltos ir burgundinės.",
+    a: "Damos — ilgos suknelės. Ponai — kostiumai. Aprangos kodo spalvas rasite skiltyje „Aprangos kodas“ aukščiau. Prašome vengti baltos ir burgundinės.",
   },
   {
-    q: "Ar bus parkavimo vieta?",
-    a: "Prie restorano „Elven“ rasite parkavimo vietų. Prie bažnyčios — miesto parkavimas, todėl atvykite anksčiau.",
+    q: "O kaip dovanos?",
+    a: "Brangiausia dovana — Jūsų buvimas šalia. Jei norėtumėte prisidėti prie mūsų svajonės — dovanas mieliausiai priimsime vokeliuose.",
   },
   {
     q: "Iki kada laukiame Jūsų atsakymo?",
@@ -188,6 +188,27 @@ function Index() {
           <div className="mt-16">
             <Countdown />
           </div>
+          {/* Hidden flower — admin shortcut */}
+          <Link
+            to="/admin"
+            aria-label="•"
+            title=""
+            className="mt-12 inline-flex h-10 w-10 items-center justify-center opacity-30 transition-all hover:opacity-90 hover:scale-110"
+          >
+            <svg viewBox="0 0 40 40" width="32" height="32" fill="none" aria-hidden="true">
+              <g stroke="var(--moss-deep)" strokeWidth="0.8" fill="color-mix(in oklab, var(--gold) 40%, transparent)">
+                <ellipse cx="20" cy="10" rx="4" ry="7" />
+                <ellipse cx="20" cy="30" rx="4" ry="7" />
+                <ellipse cx="10" cy="20" rx="7" ry="4" />
+                <ellipse cx="30" cy="20" rx="7" ry="4" />
+                <ellipse cx="13" cy="13" rx="5" ry="4" transform="rotate(-45 13 13)" />
+                <ellipse cx="27" cy="13" rx="5" ry="4" transform="rotate(45 27 13)" />
+                <ellipse cx="13" cy="27" rx="5" ry="4" transform="rotate(45 13 27)" />
+                <ellipse cx="27" cy="27" rx="5" ry="4" transform="rotate(-45 27 27)" />
+              </g>
+              <circle cx="20" cy="20" r="3" fill="var(--gold)" stroke="var(--moss-deep)" strokeWidth="0.6" />
+            </svg>
+          </Link>
         </div>
       </section>
 
@@ -251,7 +272,7 @@ function Index() {
               Restoranas „Elven"
             </h2>
             <p className="mt-3 font-serif text-lg italic text-muted-foreground md:text-xl">
-              Gucevičiaus g., Vilnius · 18:00
+              Gucevičiaus g., Vilnius · 20:00
             </p>
             <p className="mt-6 font-serif text-base leading-relaxed text-foreground/80 md:text-lg">
               Iškilminga vakarienė, tostai, šokiai &mdash; <em>tik suaugusiems</em>.

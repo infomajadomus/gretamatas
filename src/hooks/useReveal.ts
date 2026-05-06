@@ -13,14 +13,21 @@ export function useReveal() {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
             io.unobserve(entry.target);
-          } else {
-            entry.target.classList.remove("is-visible");
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.08, rootMargin: "0px 0px -5% 0px" },
     );
     els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    // Safety fallback — make sure nothing stays hidden/unclickable
+    const fallback = window.setTimeout(() => {
+      document.querySelectorAll<HTMLElement>(".reveal").forEach((el) =>
+        el.classList.add("is-visible"),
+      );
+    }, 2500);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 }
